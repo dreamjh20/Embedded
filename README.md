@@ -1,2 +1,2 @@
 # Embedded
-let's begin!
+let's begin
