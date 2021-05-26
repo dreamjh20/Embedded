@@ -1,16 +1,15 @@
+#define F_CPU 16000000UL
+
 #include <avr/io.h>
 #include <util/delay.h>
-#define F_CPU 16000000UL
+
 //  PC7 PC6 PC5 PC4 PC3 PC2 PC1 PC0
 //  DB7 DB6 DB5 DB4          E   RW  RS
 
-//void COMMAND(unsigned char byte);
-//void DATA(unsigned char byte);
-//void LCD_INIT(void);
+void COMMAND(unsigned char byte);
+void DATA(unsigned char byte);
+void LCD_INIT(void);
 
-//void COMMAND(unsigned char byte);
-//void DATA(unsigned char byte);
-//void LCD_INIT(void);
 
 void STRING(unsigned char font[], unsigned char n)
 {
@@ -91,22 +90,34 @@ void DATA(unsigned char byte)		// 데이터 함수x`
 
 int main(void)
 {
-	
+	unsigned char sw1=0;
+	unsigned char sw2=0;
 	unsigned int SEC=0,MIN=0,HOUR=0;
-	unsigned char Title[]="             TIME";
+	unsigned char Title[]="      TIME";
 	unsigned char Time[]="00:00:00";
 
 	DDRC = 0xff;
 	PORTC = 0x00;
-
+	DDRE = 0x00;
+	
 	LCD_INIT();
 	
 	MOVE(1,1);
-	STRING(Title,17);
+	STRING(Title,10);
 	MOVE(2,5);
 	STRING(Time,8);
 	while(1)
 	{
+		
+		sw2 = 0;
+		if((PINE&0x01) == 0x00) {
+			sw1 = 1 - sw1;
+		}
+		if((PINE&0x02) == 0x00) {
+			sw2=1;
+			sw1 = 1;
+		}
+		
 		MOVE(2,5);
 		DATA(HOUR/10+0x30);		//시의 10자리
 		DATA(HOUR%10+0x30);		//시의 1자리
@@ -116,12 +127,28 @@ int main(void)
 		MOVE(2,11);
 		DATA(SEC/10+0x30);		//초의 10자리
 		DATA(SEC%10+0x30);		//초의 1자리
-		_delay_ms(1000);
+		_delay_ms(100);
 
-		SEC++;
+		//SEC++;
 		if(SEC==60)	SEC=0, MIN++;
 		if(MIN==60) MIN=0, HOUR++;
 		if(HOUR==24) HOUR=0;
+		
+		
+		if(sw2 == 1){
+			SEC = 0;
+			MIN = 0; 
+			HOUR = 0;
+		}
+		if(sw1 == 0){
+			SEC++;
+			
+		}
+		else if(sw1 == 1){
+			
+		}
+		
+		
 	}
 	
 }
