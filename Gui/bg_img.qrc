@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="bg">
+    <file>코알라.jpg</file>
+    <file>부엉이.png</file>
+    <file>비비버.png</file>
+    <file>수수.png</file>
+  </qresource>
+</RCC>
