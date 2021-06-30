@@ -1,0 +1,16 @@
+body{
+	background-color:black;
+	text-align: center;
+}
+div.onoff a{	
+	font-size: 80px;
+	color: blue;
+}
+p{
+	font-size: 50px;
+	color : yellow;
+}
+#state{
+	font-size: 80px;
+	color : red;
+}
