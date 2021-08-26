@@ -3,29 +3,29 @@ Moonvely's DC_MOTOR.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000186  2**0
+  0 .data         00000000  00800100  00800100  000001ea  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000132  00000000  00000000  00000054  2**1
+  1 .text         00000196  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000186  2**0
+  2 .comment      00000030  00000000  00000000  000001ea  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001b8  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000021c  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000028  00000000  00000000  000001f4  2**0
+  4 .debug_aranges 00000028  00000000  00000000  00000258  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000882  00000000  00000000  0000021c  2**0
+  5 .debug_info   00000908  00000000  00000000  00000280  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000007d7  00000000  00000000  00000a9e  2**0
+  6 .debug_abbrev 00000848  00000000  00000000  00000b88  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000298  00000000  00000000  00001275  2**0
+  7 .debug_line   0000034a  00000000  00000000  000013d0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000034  00000000  00000000  00001510  2**2
+  8 .debug_frame  00000034  00000000  00000000  0000171c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000003d7  00000000  00000000  00001544  2**0
+  9 .debug_str    00000422  00000000  00000000  00001750  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000089  00000000  00000000  0000191b  2**0
+ 10 .debug_loc    0000014f  00000000  00000000  00001b72  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000018  00000000  00000000  000019a4  2**0
+ 11 .debug_ranges 00000018  00000000  00000000  00001cc1  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -124,7 +124,7 @@ Disassembly of section .text:
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
   a8:	0e d0       	rcall	.+28     	; 0xc6 <main>
-  aa:	41 c0       	rjmp	.+130    	; 0x12e <_exit>
+  aa:	73 c0       	rjmp	.+230    	; 0x192 <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -156,7 +156,7 @@ void DC_Motor(int speed)
 
 int main(void)
 {
-	int i;
+	int i = 0;
 	DDRA=0xFF;
   c6:	8f ef       	ldi	r24, 0xFF	; 255
   c8:	8a bb       	out	0x1a, r24	; 26
@@ -182,90 +182,205 @@ int main(void)
   e2:	90 e0       	ldi	r25, 0x00	; 0
   e4:	97 bd       	out	0x27, r25	; 39
   e6:	86 bd       	out	0x26, r24	; 38
+	OCR1A=speed;
+}
+
+int main(void)
+{
+	int i = 0;
+  e8:	c0 e0       	ldi	r28, 0x00	; 0
+  ea:	d0 e0       	ldi	r29, 0x00	; 0
+	OCR1A=0;
+	OCR1B=0;
+	ICR1=100;
 	while(1)
 	{
 		if(PIND == 0x01)
-  e8:	80 b3       	in	r24, 0x10	; 16
-  ea:	81 30       	cpi	r24, 0x01	; 1
-  ec:	29 f4       	brne	.+10     	; 0xf8 <main+0x32>
+  ec:	80 b3       	in	r24, 0x10	; 16
+  ee:	81 30       	cpi	r24, 0x01	; 1
+  f0:	29 f4       	brne	.+10     	; 0xfc <main+0x36>
 		{
 			PORTA=0xFF;
-  ee:	8f ef       	ldi	r24, 0xFF	; 255
-  f0:	8b bb       	out	0x1b, r24	; 27
+  f2:	8f ef       	ldi	r24, 0xFF	; 255
+  f4:	8b bb       	out	0x1b, r24	; 27
 			i = 100;
-  f2:	c4 e6       	ldi	r28, 0x64	; 100
-  f4:	d0 e0       	ldi	r29, 0x00	; 0
-  f6:	18 c0       	rjmp	.+48     	; 0x128 <main+0x62>
+  f6:	c4 e6       	ldi	r28, 0x64	; 100
+  f8:	d0 e0       	ldi	r29, 0x00	; 0
+  fa:	3f c0       	rjmp	.+126    	; 0x17a <main+0xb4>
 		}
 		else if(PIND == 0x02)
-  f8:	80 b3       	in	r24, 0x10	; 16
-  fa:	82 30       	cpi	r24, 0x02	; 2
-  fc:	49 f4       	brne	.+18     	; 0x110 <main+0x4a>
+  fc:	80 b3       	in	r24, 0x10	; 16
+  fe:	82 30       	cpi	r24, 0x02	; 2
+ 100:	b1 f5       	brne	.+108    	; 0x16e <main+0xa8>
 		{
-			PORTA=0x0F;
-  fe:	8f e0       	ldi	r24, 0x0F	; 15
- 100:	8b bb       	out	0x1b, r24	; 27
+			
 			if(i == 100)
  102:	c4 36       	cpi	r28, 0x64	; 100
  104:	d1 05       	cpc	r29, r1
- 106:	59 f0       	breq	.+22     	; 0x11e <main+0x58>
+ 106:	21 f4       	brne	.+8      	; 0x110 <main+0x4a>
 			{
 				i = 0;
-			}
-			else if(i == 0){
- 108:	20 97       	sbiw	r28, 0x00	; 0
- 10a:	61 f0       	breq	.+24     	; 0x124 <main+0x5e>
-				i = 70;
-			}
-			else {
-				i += 10;
- 10c:	2a 96       	adiw	r28, 0x0a	; 10
- 10e:	0c c0       	rjmp	.+24     	; 0x128 <main+0x62>
-			}
-		}
-		else if(PIND == 0x04)
- 110:	80 b3       	in	r24, 0x10	; 16
- 112:	84 30       	cpi	r24, 0x04	; 4
- 114:	49 f4       	brne	.+18     	; 0x128 <main+0x62>
-		{
-			PORTA=0x00;
- 116:	1b ba       	out	0x1b, r1	; 27
-			i = 0;
- 118:	c0 e0       	ldi	r28, 0x00	; 0
- 11a:	d0 e0       	ldi	r29, 0x00	; 0
- 11c:	05 c0       	rjmp	.+10     	; 0x128 <main+0x62>
+				PORTA=0x00;
+ 108:	1b ba       	out	0x1b, r1	; 27
 		else if(PIND == 0x02)
 		{
-			PORTA=0x0F;
+			
 			if(i == 100)
 			{
 				i = 0;
- 11e:	c0 e0       	ldi	r28, 0x00	; 0
- 120:	d0 e0       	ldi	r29, 0x00	; 0
- 122:	02 c0       	rjmp	.+4      	; 0x128 <main+0x62>
+ 10a:	c0 e0       	ldi	r28, 0x00	; 0
+ 10c:	d0 e0       	ldi	r29, 0x00	; 0
+ 10e:	35 c0       	rjmp	.+106    	; 0x17a <main+0xb4>
+				PORTA=0x00;
 			}
 			else if(i == 0){
-				i = 70;
- 124:	c6 e4       	ldi	r28, 0x46	; 70
- 126:	d0 e0       	ldi	r29, 0x00	; 0
+ 110:	20 97       	sbiw	r28, 0x00	; 0
+ 112:	29 f4       	brne	.+10     	; 0x11e <main+0x58>
+				i = 75;
+				PORTA=0x20;
+ 114:	80 e2       	ldi	r24, 0x20	; 32
+ 116:	8b bb       	out	0x1b, r24	; 27
+			{
+				i = 0;
+				PORTA=0x00;
+			}
+			else if(i == 0){
+				i = 75;
+ 118:	cb e4       	ldi	r28, 0x4B	; 75
+ 11a:	d0 e0       	ldi	r29, 0x00	; 0
+ 11c:	2e c0       	rjmp	.+92     	; 0x17a <main+0xb4>
+				PORTA=0x20;
+			}
+			else if(i == 75){
+ 11e:	cb 34       	cpi	r28, 0x4B	; 75
+ 120:	d1 05       	cpc	r29, r1
+ 122:	29 f4       	brne	.+10     	; 0x12e <main+0x68>
+				i = 80;
+				PORTA=0x30;
+ 124:	80 e3       	ldi	r24, 0x30	; 48
+ 126:	8b bb       	out	0x1b, r24	; 27
+			else if(i == 0){
+				i = 75;
+				PORTA=0x20;
+			}
+			else if(i == 75){
+				i = 80;
+ 128:	c0 e5       	ldi	r28, 0x50	; 80
+ 12a:	d0 e0       	ldi	r29, 0x00	; 0
+ 12c:	26 c0       	rjmp	.+76     	; 0x17a <main+0xb4>
+				PORTA=0x30;
+			}
+			else if(i == 80){
+ 12e:	c0 35       	cpi	r28, 0x50	; 80
+ 130:	d1 05       	cpc	r29, r1
+ 132:	29 f4       	brne	.+10     	; 0x13e <main+0x78>
+				i = 85;
+				PORTA=0x38;
+ 134:	88 e3       	ldi	r24, 0x38	; 56
+ 136:	8b bb       	out	0x1b, r24	; 27
+			else if(i == 75){
+				i = 80;
+				PORTA=0x30;
+			}
+			else if(i == 80){
+				i = 85;
+ 138:	c5 e5       	ldi	r28, 0x55	; 85
+ 13a:	d0 e0       	ldi	r29, 0x00	; 0
+ 13c:	1e c0       	rjmp	.+60     	; 0x17a <main+0xb4>
+				PORTA=0x38;
+			}
+			else if(i == 85){
+ 13e:	c5 35       	cpi	r28, 0x55	; 85
+ 140:	d1 05       	cpc	r29, r1
+ 142:	29 f4       	brne	.+10     	; 0x14e <main+0x88>
+				i = 90;
+				PORTA=0x3C;
+ 144:	8c e3       	ldi	r24, 0x3C	; 60
+ 146:	8b bb       	out	0x1b, r24	; 27
+			else if(i == 80){
+				i = 85;
+				PORTA=0x38;
+			}
+			else if(i == 85){
+				i = 90;
+ 148:	ca e5       	ldi	r28, 0x5A	; 90
+ 14a:	d0 e0       	ldi	r29, 0x00	; 0
+ 14c:	16 c0       	rjmp	.+44     	; 0x17a <main+0xb4>
+				PORTA=0x3C;
+			}
+			else if(i == 90){
+ 14e:	ca 35       	cpi	r28, 0x5A	; 90
+ 150:	d1 05       	cpc	r29, r1
+ 152:	29 f4       	brne	.+10     	; 0x15e <main+0x98>
+				i = 95;
+				PORTA=0x3E;
+ 154:	8e e3       	ldi	r24, 0x3E	; 62
+ 156:	8b bb       	out	0x1b, r24	; 27
+			else if(i == 85){
+				i = 90;
+				PORTA=0x3C;
+			}
+			else if(i == 90){
+				i = 95;
+ 158:	cf e5       	ldi	r28, 0x5F	; 95
+ 15a:	d0 e0       	ldi	r29, 0x00	; 0
+ 15c:	0e c0       	rjmp	.+28     	; 0x17a <main+0xb4>
+				PORTA=0x3E;
+			}
+			else if(i == 95){
+ 15e:	cf 35       	cpi	r28, 0x5F	; 95
+ 160:	d1 05       	cpc	r29, r1
+ 162:	59 f4       	brne	.+22     	; 0x17a <main+0xb4>
+				i = 100;
+				PORTA=0x3F;
+ 164:	8f e3       	ldi	r24, 0x3F	; 63
+ 166:	8b bb       	out	0x1b, r24	; 27
+			else if(i == 90){
+				i = 95;
+				PORTA=0x3E;
+			}
+			else if(i == 95){
+				i = 100;
+ 168:	c4 e6       	ldi	r28, 0x64	; 100
+ 16a:	d0 e0       	ldi	r29, 0x00	; 0
+ 16c:	06 c0       	rjmp	.+12     	; 0x17a <main+0xb4>
+				PORTA=0x3F;
+			}
+		}
 		else if(PIND == 0x04)
+ 16e:	80 b3       	in	r24, 0x10	; 16
+ 170:	84 30       	cpi	r24, 0x04	; 4
+ 172:	19 f4       	brne	.+6      	; 0x17a <main+0xb4>
 		{
 			PORTA=0x00;
+ 174:	1b ba       	out	0x1b, r1	; 27
 			i = 0;
+ 176:	c0 e0       	ldi	r28, 0x00	; 0
+ 178:	d0 e0       	ldi	r29, 0x00	; 0
 		}
+	
 		DC_Motor(i);
- 128:	ce 01       	movw	r24, r28
- 12a:	c1 df       	rcall	.-126    	; 0xae <DC_Motor>
-			DC_Motor(i); _delay_ms(100);
-		}
-		for(i=100;i>=0;i--){
-			DC_Motor(i); _delay_ms(100);
-		}*/
-	}
- 12c:	dd cf       	rjmp	.-70     	; 0xe8 <main+0x22>
+ 17a:	ce 01       	movw	r24, r28
+ 17c:	98 df       	rcall	.-208    	; 0xae <DC_Motor>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
 
-0000012e <_exit>:
- 12e:	f8 94       	cli
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 17e:	2f ef       	ldi	r18, 0xFF	; 255
+ 180:	89 e6       	ldi	r24, 0x69	; 105
+ 182:	98 e1       	ldi	r25, 0x18	; 24
+ 184:	21 50       	subi	r18, 0x01	; 1
+ 186:	80 40       	sbci	r24, 0x00	; 0
+ 188:	90 40       	sbci	r25, 0x00	; 0
+ 18a:	e1 f7       	brne	.-8      	; 0x184 <main+0xbe>
+ 18c:	00 c0       	rjmp	.+0      	; 0x18e <main+0xc8>
+ 18e:	00 00       	nop
+ 190:	ad cf       	rjmp	.-166    	; 0xec <main+0x26>
 
-00000130 <__stop_program>:
- 130:	ff cf       	rjmp	.-2      	; 0x130 <__stop_program>
+00000192 <_exit>:
+ 192:	f8 94       	cli
+
+00000194 <__stop_program>:
+ 194:	ff cf       	rjmp	.-2      	; 0x194 <__stop_program>

@@ -12,7 +12,7 @@ void DC_Motor(int speed)
 
 int main(void)
 {
-	int i;
+	int i = 0;
 	DDRA=0xFF;
 	DDRD=0x00;
 	DDRB=0x60;
@@ -30,17 +30,35 @@ int main(void)
 		}
 		else if(PIND == 0x02)
 		{
-			PORTA=0x0F;
+			
 			if(i == 100)
 			{
 				i = 0;
 				PORTA=0x00;
 			}
 			else if(i == 0){
-				i = 70;
+				i = 75;
+				PORTA=0x20;
 			}
-			else {
-				i += 10;
+			else if(i == 75){
+				i = 80;
+				PORTA=0x30;
+			}
+			else if(i == 80){
+				i = 85;
+				PORTA=0x38;
+			}
+			else if(i == 85){
+				i = 90;
+				PORTA=0x3C;
+			}
+			else if(i == 90){
+				i = 95;
+				PORTA=0x3E;
+			}
+			else if(i == 95){
+				i = 100;
+				PORTA=0x3F;
 			}
 		}
 		else if(PIND == 0x04)
@@ -48,7 +66,9 @@ int main(void)
 			PORTA=0x00;
 			i = 0;
 		}
+	
 		DC_Motor(i);
+		_delay_ms(500);
 		
 		/*
 		for(i=0;i<=100;i++) {

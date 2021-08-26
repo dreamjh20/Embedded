@@ -172,7 +172,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x132
+.text           0x00000000      0x196
  *(.vectors)
  .vectors       0x00000000       0x8c D:/Microchip/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega128/avr51/crtatmega128.o
                 0x00000000                __vector_default
@@ -269,13 +269,13 @@ END GROUP
  .text.DC_Motor
                 0x000000ae       0x18 main.o
                 0x000000ae                DC_Motor
- .text.main     0x000000c6       0x68 main.o
+ .text.main     0x000000c6       0xcc main.o
                 0x000000c6                main
-                0x0000012e                . = ALIGN (0x2)
+                0x00000192                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000012e        0x0 d:/microchip/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
-                0x0000012e                _exit
-                0x0000012e                exit
+ .fini9         0x00000192        0x0 d:/microchip/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+                0x00000192                _exit
+                0x00000192                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -294,11 +294,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000012e        0x4 d:/microchip/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000192        0x4 d:/microchip/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000132                _etext = .
+                0x00000196                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000132
+.data           0x00800100        0x0 load address 0x00000196
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -316,8 +316,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x00800100                PROVIDE (__bss_end, .)
-                0x00000132                __data_load_start = LOADADDR (.data)
-                0x00000132                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000196                __data_load_start = LOADADDR (.data)
+                0x00000196                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800100        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -396,34 +396,34 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x882
+.debug_info     0x00000000      0x908
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x780 D:/Microchip/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_info    0x00000780      0x102 main.o
+ .debug_info    0x00000780      0x188 main.o
 
-.debug_abbrev   0x00000000      0x7d7
+.debug_abbrev   0x00000000      0x848
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x718 D:/Microchip/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_abbrev  0x00000718       0xbf main.o
+ .debug_abbrev  0x00000718      0x130 main.o
 
-.debug_line     0x00000000      0x298
+.debug_line     0x00000000      0x34a
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x16a D:/Microchip/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_line    0x0000016a      0x12e main.o
+ .debug_line    0x0000016a      0x1e0 main.o
 
 .debug_frame    0x00000000       0x34
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 main.o
 
-.debug_str      0x00000000      0x3d7
+.debug_str      0x00000000      0x422
  *(.debug_str)
  .debug_str     0x00000000      0x27d D:/Microchip/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_str     0x0000027d      0x15a main.o
-                                0x193 (size before relaxing)
+ .debug_str     0x0000027d      0x1a5 main.o
+                                0x1de (size before relaxing)
 
-.debug_loc      0x00000000       0x89
+.debug_loc      0x00000000      0x14f
  *(.debug_loc)
- .debug_loc     0x00000000       0x89 main.o
+ .debug_loc     0x00000000      0x14f main.o
 
 .debug_macinfo
  *(.debug_macinfo)
