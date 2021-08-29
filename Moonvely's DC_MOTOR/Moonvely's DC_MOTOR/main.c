@@ -30,7 +30,6 @@ int main(void)
 		}
 		else if(PIND == 0x02)
 		{
-			
 			if(i == 100)
 			{
 				i = 0;
@@ -66,16 +65,7 @@ int main(void)
 			PORTA=0x00;
 			i = 0;
 		}
-	
 		DC_Motor(i);
 		_delay_ms(500);
-		
-		/*
-		for(i=0;i<=100;i++) {
-			DC_Motor(i); _delay_ms(100);
-		}
-		for(i=100;i>=0;i--){
-			DC_Motor(i); _delay_ms(100);
-		}*/
 	}
 }
