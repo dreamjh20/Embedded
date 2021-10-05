@@ -3,29 +3,29 @@ adc.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000170  2**0
+  0 .data         00000000  00800100  00800100  0000019a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000011c  00000000  00000000  00000054  2**1
+  1 .text         00000146  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000170  2**0
+  2 .comment      00000030  00000000  00000000  0000019a  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001a0  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001cc  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000038  00000000  00000000  000001e0  2**0
+  4 .debug_aranges 00000038  00000000  00000000  0000020c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000008da  00000000  00000000  00000218  2**0
+  5 .debug_info   000008da  00000000  00000000  00000244  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 0000080c  00000000  00000000  00000af2  2**0
+  6 .debug_abbrev 0000080c  00000000  00000000  00000b1e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000002eb  00000000  00000000  000012fe  2**0
+  7 .debug_line   00000321  00000000  00000000  0000132a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000054  00000000  00000000  000015ec  2**2
+  8 .debug_frame  00000054  00000000  00000000  0000164c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000003e4  00000000  00000000  00001640  2**0
+  9 .debug_str    000003e4  00000000  00000000  000016a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000000f4  00000000  00000000  00001a24  2**0
+ 10 .debug_loc    0000014e  00000000  00000000  00001a84  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000028  00000000  00000000  00001b18  2**0
+ 11 .debug_ranges 00000028  00000000  00000000  00001bd2  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -109,15 +109,15 @@ Disassembly of section .text:
   92:	d0 e1       	ldi	r29, 0x10	; 16
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
-  98:	37 d0       	rcall	.+110    	; 0x108 <main>
-  9a:	3e c0       	rjmp	.+124    	; 0x118 <_exit>
+  98:	4c d0       	rcall	.+152    	; 0x132 <main>
+  9a:	53 c0       	rjmp	.+166    	; 0x142 <_exit>
 
 0000009c <__bad_interrupt>:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
 
 0000009e <init_adc>:
+	}
 }
-
 
 int init_adc(void)
 {
@@ -162,72 +162,96 @@ unsigned short read_adc()
 
 void show_adc_led(unsigned short value)
 {
-	if(value<=CDS_10) PORTA = 0x1F;
-  c0:	86 35       	cpi	r24, 0x56	; 86
+	if(value<=CDS_10) PORTA = 0xFF;
+  c0:	83 3c       	cpi	r24, 0xC3	; 195
   c2:	21 e0       	ldi	r18, 0x01	; 1
   c4:	92 07       	cpc	r25, r18
   c6:	18 f4       	brcc	.+6      	; 0xce <show_adc_led+0xe>
-  c8:	8f e1       	ldi	r24, 0x1F	; 31
+  c8:	8f ef       	ldi	r24, 0xFF	; 255
   ca:	8b bb       	out	0x1b, r24	; 27
   cc:	08 95       	ret
-	else if(value<=CDS_20) PORTA = 0x0F;
-  ce:	83 3c       	cpi	r24, 0xC3	; 195
+	else if(value<=CDS_20) PORTA = 0x7F;
+  ce:	86 3e       	cpi	r24, 0xE6	; 230
   d0:	21 e0       	ldi	r18, 0x01	; 1
   d2:	92 07       	cpc	r25, r18
   d4:	18 f4       	brcc	.+6      	; 0xdc <show_adc_led+0x1c>
-  d6:	8f e0       	ldi	r24, 0x0F	; 15
+  d6:	8f e7       	ldi	r24, 0x7F	; 127
   d8:	8b bb       	out	0x1b, r24	; 27
   da:	08 95       	ret
-	else if(value<=CDS_50) PORTA = 0x07;
-  dc:	87 32       	cpi	r24, 0x27	; 39
+	else if(value<=CDS_30) PORTA = 0x3F;
+  dc:	89 30       	cpi	r24, 0x09	; 9
   de:	22 e0       	ldi	r18, 0x02	; 2
   e0:	92 07       	cpc	r25, r18
   e2:	18 f4       	brcc	.+6      	; 0xea <show_adc_led+0x2a>
-  e4:	87 e0       	ldi	r24, 0x07	; 7
+  e4:	8f e3       	ldi	r24, 0x3F	; 63
   e6:	8b bb       	out	0x1b, r24	; 27
   e8:	08 95       	ret
-	else if(value<=CDS_80) PORTA = 0x03;
-  ea:	8b 38       	cpi	r24, 0x8B	; 139
+	else if(value<=CDS_40) PORTA = 0x1F;
+  ea:	8c 32       	cpi	r24, 0x2C	; 44
   ec:	22 e0       	ldi	r18, 0x02	; 2
   ee:	92 07       	cpc	r25, r18
   f0:	18 f4       	brcc	.+6      	; 0xf8 <show_adc_led+0x38>
-  f2:	83 e0       	ldi	r24, 0x03	; 3
+  f2:	8f e1       	ldi	r24, 0x1F	; 31
   f4:	8b bb       	out	0x1b, r24	; 27
   f6:	08 95       	ret
+	else if(value<=CDS_50) PORTA = 0x0F;
+  f8:	8f 34       	cpi	r24, 0x4F	; 79
+  fa:	22 e0       	ldi	r18, 0x02	; 2
+  fc:	92 07       	cpc	r25, r18
+  fe:	18 f4       	brcc	.+6      	; 0x106 <show_adc_led+0x46>
+ 100:	8f e0       	ldi	r24, 0x0F	; 15
+ 102:	8b bb       	out	0x1b, r24	; 27
+ 104:	08 95       	ret
+	else if(value<=CDS_60) PORTA = 0x07;
+ 106:	82 37       	cpi	r24, 0x72	; 114
+ 108:	22 e0       	ldi	r18, 0x02	; 2
+ 10a:	92 07       	cpc	r25, r18
+ 10c:	18 f4       	brcc	.+6      	; 0x114 <show_adc_led+0x54>
+ 10e:	87 e0       	ldi	r24, 0x07	; 7
+ 110:	8b bb       	out	0x1b, r24	; 27
+ 112:	08 95       	ret
+	else if(value<=CDS_70) PORTA = 0x03;
+ 114:	8b 38       	cpi	r24, 0x8B	; 139
+ 116:	22 e0       	ldi	r18, 0x02	; 2
+ 118:	92 07       	cpc	r25, r18
+ 11a:	18 f4       	brcc	.+6      	; 0x122 <show_adc_led+0x62>
+ 11c:	83 e0       	ldi	r24, 0x03	; 3
+ 11e:	8b bb       	out	0x1b, r24	; 27
+ 120:	08 95       	ret
 	else if(value<=CDS_100) PORTA = 0x01;
-  f8:	8c 3d       	cpi	r24, 0xDC	; 220
-  fa:	92 40       	sbci	r25, 0x02	; 2
-  fc:	18 f4       	brcc	.+6      	; 0x104 <show_adc_led+0x44>
-  fe:	81 e0       	ldi	r24, 0x01	; 1
- 100:	8b bb       	out	0x1b, r24	; 27
- 102:	08 95       	ret
+ 122:	8e 3a       	cpi	r24, 0xAE	; 174
+ 124:	92 40       	sbci	r25, 0x02	; 2
+ 126:	18 f4       	brcc	.+6      	; 0x12e <show_adc_led+0x6e>
+ 128:	81 e0       	ldi	r24, 0x01	; 1
+ 12a:	8b bb       	out	0x1b, r24	; 27
+ 12c:	08 95       	ret
 	else PORTA = 0x00;
- 104:	1b ba       	out	0x1b, r1	; 27
- 106:	08 95       	ret
+ 12e:	1b ba       	out	0x1b, r1	; 27
+ 130:	08 95       	ret
 
-00000108 <main>:
+00000132 <main>:
 void show_adc_led(unsigned short data);
 
 int main(void)
 {
 	unsigned short value;
-	DDRA = 0x1F;
- 108:	8f e1       	ldi	r24, 0x1F	; 31
- 10a:	8a bb       	out	0x1a, r24	; 26
+	DDRA = 0xFF;
+ 132:	8f ef       	ldi	r24, 0xFF	; 255
+ 134:	8a bb       	out	0x1a, r24	; 26
 	DDRF = 0x00;
- 10c:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <__TEXT_REGION_LENGTH__+0x7e0061>
+ 136:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <__TEXT_REGION_LENGTH__+0x7e0061>
 	init_adc();
- 110:	c6 df       	rcall	.-116    	; 0x9e <init_adc>
+ 13a:	b1 df       	rcall	.-158    	; 0x9e <init_adc>
 	while (1)
 	{
 		value = read_adc();
- 112:	ca df       	rcall	.-108    	; 0xa8 <read_adc>
+ 13c:	b5 df       	rcall	.-150    	; 0xa8 <read_adc>
 		show_adc_led(value);
- 114:	d5 df       	rcall	.-86     	; 0xc0 <show_adc_led>
- 116:	fd cf       	rjmp	.-6      	; 0x112 <main+0xa>
+ 13e:	c0 df       	rcall	.-128    	; 0xc0 <show_adc_led>
+ 140:	fd cf       	rjmp	.-6      	; 0x13c <main+0xa>
 
-00000118 <_exit>:
- 118:	f8 94       	cli
+00000142 <_exit>:
+ 142:	f8 94       	cli
 
-0000011a <__stop_program>:
- 11a:	ff cf       	rjmp	.-2      	; 0x11a <__stop_program>
+00000144 <__stop_program>:
+ 144:	ff cf       	rjmp	.-2      	; 0x144 <__stop_program>
