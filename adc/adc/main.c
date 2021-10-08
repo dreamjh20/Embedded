@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #define F_CPU 16000000UL
 #include <util/delay.h>
+
 #define CDS_10 450
 #define CDS_20 485
 #define CDS_30 520
@@ -9,6 +10,7 @@
 #define CDS_60 625
 #define CDS_70 650
 #define CDS_100 685
+
 void int_adc();
 unsigned short read_adc();
 void show_adc_led(unsigned short data);
