@@ -21,6 +21,7 @@ int main(void)
 	DDRA = 0xFF;
 	DDRF = 0x00;
 	init_adc();
+	
 	while (1)
 	{
 		value = read_adc();
