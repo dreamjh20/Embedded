@@ -29,7 +29,7 @@ int main(void)
 	}
 }
 
-int init_adc(void)
+void init_adc(void)
 {
 	ADMUX = 0x40;
 	ADCSRA = 0x87;    // adc en
