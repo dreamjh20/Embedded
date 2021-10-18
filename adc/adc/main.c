@@ -18,6 +18,7 @@ void show_adc_led(unsigned short data);
 int main(void)
 {
 	unsigned short value;
+	
 	DDRA = 0xFF;
 	DDRF = 0x00;
 	init_adc();
