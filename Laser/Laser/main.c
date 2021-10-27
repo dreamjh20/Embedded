@@ -27,7 +27,6 @@ int main(void)
 	PORTA = 0x01;   //green on
 	_delay_ms(3000); //3초 대기
 	PORTB = 0x01;  // laser on
-	PORTA = 0x02;  //blue on
 	
 	while (1)
 	{
@@ -60,5 +59,4 @@ unsigned short read_adc()
 void show_adc_led(unsigned short value)
 {
 	if(value<=1000) PORTA = 0x04;     //object detected
-	else PORTA = 0x02;     //clear
 }
