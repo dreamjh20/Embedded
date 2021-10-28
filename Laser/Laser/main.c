@@ -18,16 +18,17 @@ void show_adc_led(unsigned short data);
 int main(void)
 {
 	unsigned short value;
-	
+
 	DDRA = 0xFF;
 	DDRF = 0x00;
 	DDRB = 0xFF;
 	init_adc();
-	
+
 	PORTA = 0x01;   //green on
 	_delay_ms(3000); //3초 대기
 	PORTB = 0x01;  // laser on
-	
+	PORTA = 0x02;  //blue on
+
 	while (1)
 	{
 		value = read_adc();
@@ -52,11 +53,12 @@ unsigned short read_adc()
 	adc_low = ADCL;
 	adc_high = ADCH;
 	value = (adc_high << 8) | adc_low;
-	
+
 	return value;
 }
 
 void show_adc_led(unsigned short value)
 {
 	if(value<=1000) PORTA = 0x04;     //object detected
-}
+	else PORTA = 0x02;     //clear
+} 
