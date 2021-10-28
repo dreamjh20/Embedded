@@ -59,6 +59,6 @@ unsigned short read_adc()
 
 void show_adc_led(unsigned short value)
 {
-	if(value<=1000) PORTA = 0x04;     //object detected
+	if(value<=600) PORTA = 0x04;     //object detected
 	else PORTA = 0x02;     //clear
 } 
