@@ -47,8 +47,7 @@ unsigned short read_adc()
 	unsigned char adc_low, adc_high;
 	unsigned short value;
 
-	ADCSRA |= 0x40;    // ADC start
-	// ADC Complete
+	ADCSRA |= 0x40;
 	while((ADCSRA & 0x10) != 0x10);
 	adc_low = ADCL;
 	adc_high = ADCH;
