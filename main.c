@@ -53,7 +53,6 @@ int main(void)
 			status_led  = 1 - status_led;
 			    //delay to divide
 		}
-		
 		  
 		if(status_led == 1){   //locked
 			PORTB = 0x01;      //status led on
@@ -68,7 +67,6 @@ int main(void)
 			PORTB = 0x00;      //status led off
 			PORTA = 0x04;      //laser off
 		}
-		
 		
 		_delay_ms(100);    
 	}
